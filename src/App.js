@@ -1,7 +1,7 @@
-import { SeenIcon, ChatIcon } from "./svg";
+import { SeenIcon } from "./svg";
 
 function App() {
-  return <div></div>;
+  return <div className="dark"></div>;
 }
 
 export default App;
