@@ -3,8 +3,12 @@ import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import { logout } from "./store/userSlice";
+import { useSelector } from "react-redux";
 
 function App() {
+  const { user } = useSelector(state => ({ ...state }));
+  console.log(user);
+
   return (
     <div className="dark">
       <Router>
