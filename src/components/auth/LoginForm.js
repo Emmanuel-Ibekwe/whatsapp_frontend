@@ -4,15 +4,14 @@ import { signInSchema } from "../../utils/validation";
 import PulseLoader from "react-spinners/PulseLoader";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { changeStatus } from "../../store/userSlice";
+import { loginUser } from "../../store/userSlice";
 import Input from "./Input";
-import axios from "axios";
 
 export default function LoginForm() {
   const {
     register,
     handleSubmit,
-    watch,
+
     formState: { errors }
   } = useForm({
     resolver: yupResolver(signInSchema)
@@ -23,7 +22,10 @@ export default function LoginForm() {
   const { status, error } = useSelector(state => state.user);
 
   const onSubmit = async data => {
-    dispatch(changeStatus("loading"));
+    let res = await dispatch(loginUser(data));
+    if (res?.payload?.user) {
+      navigate("/");
+    }
   };
 
   return (

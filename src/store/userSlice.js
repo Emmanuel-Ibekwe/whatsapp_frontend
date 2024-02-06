@@ -29,12 +29,30 @@ export const signupUser = createAsyncThunk(
 
       return data;
     } catch (error) {
-      console.log(error);
-      console.log(error.response.data.message);
+      // console.log(error);
+      // console.log(error.response.data.message);
       return rejectWithValue(error.response.data.message);
     }
   }
   // error.response.data.error.message
+);
+
+export const loginUser = createAsyncThunk(
+  "auth/login",
+  async (values, { rejectWithValue }) => {
+    try {
+      console.log(AUTH_ENDPOINT);
+      const { data } = await axios.post(`${AUTH_ENDPOINT}/login`, {
+        ...values
+      });
+
+      // console.log(data);
+
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
 );
 
 export const userSlice = createSlice({
@@ -68,6 +86,18 @@ export const userSlice = createSlice({
         state.user = action.payload.user;
       })
       .addCase(signupUser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      .addCase(loginUser.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.error = "";
+        state.user = action.payload.user;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       });
