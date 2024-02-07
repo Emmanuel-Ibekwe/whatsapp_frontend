@@ -41,7 +41,9 @@ export default function SignupForm() {
       });
     } else {
       const res = await dispatch(signupUser({ ...data, picture: "" }));
-      if (res?.payload?.user) navigate("/");
+      if (res?.payload?.user) {
+        navigate("/");
+      }
     }
   };
 
