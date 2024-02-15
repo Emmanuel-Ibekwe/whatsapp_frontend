@@ -25,16 +25,8 @@ function App() {
             path="/"
             element={token ? <Home /> : <Navigate to="/login" />}
           />
-          <Route
-            exact
-            path="/signup"
-            element={!token ? <Signup /> : <Navigate to="/" />}
-          />
-          <Route
-            exact
-            path="/login"
-            element={!token ? <Login /> : <Navigate to="/" />}
-          />
+          <Route exact path="/signup" element={<Signup />} />
+          <Route exact path="/login" element={<Login />} />
         </Routes>
       </Router>
     </div>
