@@ -34,7 +34,10 @@ function SidebarHeader() {
             </button>
           </li>
           <li className="relative">
-            <button className="btn" onClick={() => setShowMenu(prev => !prev)}>
+            <button
+              className={`btn ${showMenu ? "bg-dark_hover_1" : ""}`}
+              onClick={() => setShowMenu(prev => !prev)}
+            >
               <DotsIcon className="dark:fill-dark_svg_1" />
             </button>
             {showMenu && <Menu />}
