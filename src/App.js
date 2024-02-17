@@ -4,17 +4,30 @@ import {
   Routes,
   Navigate
 } from "react-router-dom";
+import { useEffect } from "react";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import { logout } from "./store/userSlice";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getTokenDuration } from "./utils/auth";
 
 function App() {
+  const dispatch = useDispatch();
   const { user } = useSelector(state => state.user);
   const { token } = user;
   console.log(token);
   console.log(user);
+
+  useEffect(() => {
+    console.log("refreshToken", document.cookie);
+
+    const duration = getTokenDuration();
+
+    if (duration < 0) {
+      dispatch(logout());
+    }
+  }, []);
 
   return (
     <div className="dark">
