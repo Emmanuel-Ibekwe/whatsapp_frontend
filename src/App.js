@@ -20,8 +20,6 @@ function App() {
   console.log(user);
 
   useEffect(() => {
-    console.log("refreshToken", document.cookie);
-
     const duration = getTokenDuration();
 
     if (duration < 0) {
