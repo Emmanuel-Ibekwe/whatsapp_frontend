@@ -2,8 +2,8 @@ import moment from "moment";
 import { dateHandler } from "../../../utils/date";
 
 export default function Conversation({ convo }) {
-  console.log(moment(convo.latestMessage.createdAt));
-  console.log(dateHandler(convo.latestMessage.createdAt));
+  // console.log(moment(convo.latestMessage.createdAt));
+  // console.log(dateHandler(convo.latestMessage.createdAt));
 
   return (
     <li className="h-[72px] w-full dark:bg-dark_bg_1 hover:dark:bg-dark_bg_2 dark:text-dark_text_1 px-[10px]">
