@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { loginUser } from "../../store/userSlice";
 import Input from "./Input";
+import { setExpirationInLocalStorage } from "../../utils/auth";
 
 export default function LoginForm() {
   const {
@@ -23,6 +24,10 @@ export default function LoginForm() {
 
   const onSubmit = async data => {
     let res = await dispatch(loginUser(data));
+    console.log(res);
+    if (!res.error) {
+      setExpirationInLocalStorage();
+    }
     if (res?.payload?.user) {
       navigate("/");
     }
