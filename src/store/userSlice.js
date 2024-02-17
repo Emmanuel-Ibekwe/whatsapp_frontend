@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { setExpirationInLocalStorage } from "../utils/auth";
 
 const AUTH_ENDPOINT = `${process.env.REACT_APP_API_ENDPOINT}/auth`;
 
@@ -47,7 +48,9 @@ export const loginUser = createAsyncThunk(
       });
 
       // console.log(data);
-
+      if (data) {
+        console.log(data);
+      }
       return data;
     } catch (error) {
       return rejectWithValue(error.response.data.message);
@@ -70,6 +73,7 @@ export const userSlice = createSlice({
         status: "",
         token: ""
       };
+      localStorage.removeItem("expiration");
     },
     changeStatus: (state, action) => {
       state.status = action.payload;
