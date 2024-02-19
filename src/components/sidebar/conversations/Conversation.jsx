@@ -28,9 +28,9 @@ export default function Conversation({ convo }) {
       {convo?.latestMessage && (
         <li
           onClick={() => openConversation()}
-          className="h-[72px] w-full dark:bg-dark_bg_1 hover:dark:bg-dark_bg_2 dark:text-dark_text_1 px-[10px] cursor-pointer"
+          className=" w-full dark:bg-dark_bg_1   dark:text-dark_text_1  cursor-pointer"
         >
-          <div className="relative w-full flex items-center justify-between py-[10px]">
+          <div className="h-[85px] relative w-full flex items-center justify-between py-[10px] px-[10px] hover:dark:bg-dark_bg_2">
             <div className="flex items-center gap-x-3 w-full">
               <div className="relative w-[50px] h-[50px] rounded-full overflow-hidden">
                 <img
