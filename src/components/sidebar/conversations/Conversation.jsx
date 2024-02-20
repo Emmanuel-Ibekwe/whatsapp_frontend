@@ -1,6 +1,9 @@
 import moment from "moment";
 import { dateHandler } from "../../../utils/date";
-import { open_create_conversation } from "../../../store/chatSlice";
+import {
+  open_create_conversation,
+  setActiveConversation
+} from "../../../store/chatSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getConversationId } from "../../../utils/chat";
 
@@ -16,8 +19,9 @@ export default function Conversation({ convo }) {
     isGroup: convo.isGroup ? convo._id : false
   };
   const openConversation = async () => {
-    const res = await dispatch(open_create_conversation(values));
-    console.log(res);
+    // const res = await dispatch(open_create_conversation(values));
+    // console.log(res);
+    dispatch(setActiveConversation(convo));
   };
 
   console.log(convo?.latestMessage?.createdAt);
