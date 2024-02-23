@@ -1,0 +1,47 @@
+import { useState } from "react";
+import EmojiPicker from "./EmojiPicker";
+import Attachments from "./Attachments";
+import Input from "./Input";
+import { SendIcon } from "../../../svg";
+import { useDispatch, useSelector } from "react-redux";
+import { sendMessage } from "../../../store/chatSlice";
+
+export default function ChatActions() {
+  const [message, setMessage] = useState("");
+  const { user } = useSelector(state => state.user);
+  const { activeConversation } = useSelector(state => state.chat);
+
+  const { token } = user;
+  const dispatch = useDispatch();
+
+  const values = {
+    message,
+    token,
+    files: [],
+    convo_id: activeConversation._id
+  };
+
+  const sendMessageHandler = async e => {
+    e.preventDefault();
+    await dispatch(sendMessage(values));
+    setMessage("");
+  };
+
+  return (
+    <form
+      onSubmit={sendMessageHandler}
+      className="dark:bg-dark_bg_2 h-[60px] w-full flex items-center absolute bottom-0 py-2m px-4 select-none"
+    >
+      <div className="w-full flex items-center gap-x-2">
+        <ul className="flex gap-x-2">
+          <EmojiPicker />
+          <Attachments />
+        </ul>
+        <Input onSetMessage={setMessage} message={message} />
+        <button type="submit" className="btn">
+          <SendIcon className="dark:fill-dark_svg_1" />
+        </button>
+      </div>
+    </form>
+  );
+}
