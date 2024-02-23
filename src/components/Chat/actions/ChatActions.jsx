@@ -1,4 +1,6 @@
 import { useState } from "react";
+import ClipLoader from "react-spinners/ClipLoader";
+
 import EmojiPicker from "./EmojiPicker";
 import Attachments from "./Attachments";
 import Input from "./Input";
@@ -9,7 +11,7 @@ import { sendMessage } from "../../../store/chatSlice";
 export default function ChatActions() {
   const [message, setMessage] = useState("");
   const { user } = useSelector(state => state.user);
-  const { activeConversation } = useSelector(state => state.chat);
+  const { activeConversation, status } = useSelector(state => state.chat);
 
   const { token } = user;
   const dispatch = useDispatch();
@@ -39,7 +41,11 @@ export default function ChatActions() {
         </ul>
         <Input onSetMessage={setMessage} message={message} />
         <button type="submit" className="btn">
-          <SendIcon className="dark:fill-dark_svg_1" />
+          {status === "loading" ? (
+            <ClipLoader color="#e9edef" size={25} />
+          ) : (
+            <SendIcon className="dark:fill-dark_svg_1" />
+          )}
         </button>
       </div>
     </form>
