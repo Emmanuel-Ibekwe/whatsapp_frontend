@@ -22,7 +22,7 @@ export default function ChatHeader() {
             <h1 className="dark:text-[#e9edef] text-md tracking-wide  font-bold">
               {name}
             </h1>
-            <span className="text-xs text-dark_svg_2">online</span>
+            <span className="text-sm text-dark_svg_2">online</span>
           </div>
         </div>
         <ul className="flex items-center gap-x-2.5">
