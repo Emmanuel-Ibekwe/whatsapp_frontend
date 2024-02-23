@@ -9,7 +9,7 @@ function Sidebar() {
   const [searchResults, setSearchResults] = useState([]);
 
   return (
-    <div className="w-[525px] h-full select-none shrink-0 ">
+    <div className="w-[400px] h-full select-none shrink-0 ">
       <SidebarHeader />
       <Notifications />
       <Search
