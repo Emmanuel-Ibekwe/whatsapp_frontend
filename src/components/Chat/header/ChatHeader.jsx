@@ -6,7 +6,7 @@ export default function ChatHeader() {
   const { name, picture } = activeConversation;
 
   return (
-    <div className="h-[70px] dark:bg-dark_bg_2 flex items-center p16 select-none">
+    <div className="h-[50px] dark:bg-dark_bg_2 flex items-center p16 select-none">
       <div className="w-full flex items-center justify-between">
         <div className="flex items-center gap-x-4">
           <button className="btn w-[50px] h-[50px] ">
