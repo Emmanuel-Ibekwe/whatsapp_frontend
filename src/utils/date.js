@@ -65,10 +65,13 @@ export const getMessageDate = date => {
   if (
     time.search("hour") !== -1 ||
     time.search("minute") !== -1 ||
-    time === "a few seconds" ||
-    time === "a day"
+    time === "a few seconds"
   ) {
-    return "Yesterday".toUpperCase();
+    return "TODAY";
+  }
+
+  if (time === "a day") {
+    return "YESTERDAY";
   }
 
   if (time.search("days") !== -1) {
