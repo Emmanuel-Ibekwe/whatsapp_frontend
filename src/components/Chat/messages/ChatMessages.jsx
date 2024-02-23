@@ -21,6 +21,7 @@ export default function ChatMessages() {
 
     if (i <= 0 || !sameDay(currentMessageDate, dateofMsgBeforeCurMsg)) {
       showDate = true;
+      setCornerTriangle = true;
     } else {
       showDate = false;
     }
