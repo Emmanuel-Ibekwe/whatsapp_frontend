@@ -8,7 +8,7 @@ export default function Message({ message, me, setCornerTriangle, showDate }) {
       {showDate && (
         // Date
         <div className="flex items-center justify-center my-5 ">
-          <span className="bg-white dark:bg-dark_bg_2 text-dark_svg_2 px-3 py-2 rounded-lg">
+          <span className="bg-white dark:bg-dark_bg_2 text-dark_svg_2 px-3 py-2 rounded-lg text-sm">
             {getMessageDate(message.createdAt)}
           </span>
         </div>
@@ -22,9 +22,9 @@ export default function Message({ message, me, setCornerTriangle, showDate }) {
               me ? "bg-green_3" : "dark:bg-dark_bg_2"
             }`}
           >
-            <p className="text-left text-lg  pb-2">
+            <p className="text-left text-sm  ">
               {message.message}
-              <span className="relative text-sm text-dark_text_5 -bottom-[10px] pl-4">
+              <span className="relative text-xs text-dark_text_5 -bottom-[5px] pl-2">
                 {moment(message.createdAt).format("LT")}
               </span>
             </p>
