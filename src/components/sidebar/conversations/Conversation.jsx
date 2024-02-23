@@ -34,7 +34,7 @@ export default function Conversation({ convo }) {
           onClick={() => openConversation()}
           className=" w-full dark:bg-dark_bg_1   dark:text-dark_text_1  cursor-pointer"
         >
-          <div className="h-[85px] relative w-full flex items-center justify-between py-[10px] px-[10px] hover:dark:bg-dark_bg_2">
+          <div className="h-[72px] relative w-full flex items-center justify-between py-[10px] px-[10px] hover:dark:bg-dark_bg_2">
             <div className="flex items-center gap-x-3 w-full">
               <div className="relative w-[50px] h-[50px] rounded-full overflow-hidden">
                 <img
@@ -45,14 +45,14 @@ export default function Conversation({ convo }) {
               </div>
               <div className="w-full flex flex-col w-full ">
                 <div className="flex items-baseline justify-between  mt-0">
-                  <h1 className="font-semibold flex items-center gap-x-2 text-2xl">
+                  <h1 className="font-normal flex items-center gap-x-2 text-lg">
                     {convo.name}
                   </h1>
-                  <span className="dark:text-dark_text_2 text-sm">
+                  <span className="dark:text-dark_text_2 text-xs">
                     {dateHandler(convo?.latestMessage?.createdAt)}
                   </span>
                 </div>
-                <div className="flex items-center gap-x-1 dark:text-dark_text_2 text-lg">
+                <div className="flex items-center gap-x-1 dark:text-dark_text_2 text-sm">
                   <p>
                     {convo?.latestMessage?.message.length > 50
                       ? `${convo?.latestMessage?.message.substring(0, 50)}...`
