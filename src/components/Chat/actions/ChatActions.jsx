@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 
-import EmojiPicker from "./EmojiPicker";
+import EmojiPickerButton from "./EmojiPickerButton";
 import Attachments from "./Attachments";
 import Input from "./Input";
 import { SendIcon } from "../../../svg";
@@ -36,7 +36,7 @@ export default function ChatActions() {
     >
       <div className="w-full flex items-center gap-x-2">
         <ul className="flex gap-x-2">
-          <EmojiPicker />
+          <EmojiPickerButton />
           <Attachments />
         </ul>
         <Input onSetMessage={setMessage} message={message} />

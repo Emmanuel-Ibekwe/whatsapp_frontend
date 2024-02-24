@@ -1,6 +1,6 @@
 import { EmojiIcon } from "../../../svg";
 
-export default function EmojiPicker() {
+export default function EmojiPickerButton() {
   return (
     <li>
       <button className="btn" type="button">
