@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import moment from "moment";
 import { dateHandler } from "../../../utils/date";
 import {
@@ -8,10 +9,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { getConversationId } from "../../../utils/chat";
 
 export default function Conversation({ convo }) {
+  const [activeConvo, setActiveConvo] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector(state => state.user);
+  const { activeConversation } = useSelector(state => state.chat);
   const { token } = user;
   console.log(convo);
+
+  useEffect(() => {
+    if (convo._id === activeConversation._id) {
+      setActiveConvo(true);
+    } else {
+      setActiveConvo(false);
+    }
+  }, [activeConversation]);
 
   const values = {
     receiver_id: getConversationId(user, convo.users),
@@ -33,9 +44,13 @@ export default function Conversation({ convo }) {
       {convo?.latestMessage && (
         <li
           onClick={() => openConversation()}
-          className=" w-full dark:bg-dark_bg_1   dark:text-dark_text_1  cursor-pointer"
+          className={`w-full ${
+            activeConvo ? "dark:bg-dark_bg_5" : "dark:bg-dark_bg_1"
+          }    dark:text-dark_text_1  cursor-pointer`}
         >
-          <div className="h-[72px] relative w-full flex items-center justify-between py-[10px] px-[10px] hover:dark:bg-dark_bg_2">
+          <div
+            className={`h-[72px] relative w-full flex items-center justify-between py-[10px] px-[10px] hover:dark:bg-dark_bg_2 `}
+          >
             <div className="flex items-center gap-x-3 w-full">
               <div className="relative w-[50px] h-[50px] rounded-full overflow-hidden">
                 <img
