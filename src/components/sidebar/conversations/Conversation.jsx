@@ -24,8 +24,9 @@ export default function Conversation({ convo }) {
     dispatch(setActiveConversation(convo));
   };
 
-  console.log(convo?.latestMessage?.createdAt);
-  console.log(dateHandler(convo?.latestMessage?.createdAt));
+  // const date = new Date(convo?.latestMessage?.createdAt);
+  // console.log(date.getTime());
+  // console.log(dateHandler(convo?.latestMessage?.createdAt));
 
   return (
     <>
