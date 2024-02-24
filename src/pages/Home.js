@@ -8,7 +8,6 @@ import ChatContainer from "../components/Chat/ChatContainer";
 function Home() {
   const { user } = useSelector(state => state.user);
   const { activeConversation } = useSelector(state => state.chat);
-  console.log("activeConversation", activeConversation);
   const dispatch = useDispatch();
   useEffect(() => {
     if (user?.token) {
