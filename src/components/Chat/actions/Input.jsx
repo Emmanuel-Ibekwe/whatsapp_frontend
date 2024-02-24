@@ -1,4 +1,4 @@
-export default function Input({ message, onSetMessage }) {
+export default function Input({ message, onSetMessage, textRef }) {
   const onChangeHandler = e => {
     onSetMessage(e.target.value);
   };
@@ -10,6 +10,7 @@ export default function Input({ message, onSetMessage }) {
         placeholder="type a message"
         onChange={onChangeHandler}
         value={message}
+        ref={textRef}
       />
     </div>
   );
