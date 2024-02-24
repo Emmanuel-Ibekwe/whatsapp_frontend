@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 
 import EmojiPickerButton from "./EmojiPickerButton";
@@ -13,6 +13,7 @@ export default function ChatActions() {
   const { user } = useSelector(state => state.user);
   const { activeConversation, status } = useSelector(state => state.chat);
 
+  const textRef = useRef();
   const { token } = user;
   const dispatch = useDispatch();
 
@@ -36,10 +37,14 @@ export default function ChatActions() {
     >
       <div className="w-full flex items-center gap-x-2">
         <ul className="flex gap-x-2">
-          <EmojiPickerButton />
+          <EmojiPickerButton
+            textRef={textRef}
+            onSetMessage={setMessage}
+            message={message}
+          />
           <Attachments />
         </ul>
-        <Input onSetMessage={setMessage} message={message} />
+        <Input onSetMessage={setMessage} message={message} textRef={textRef} />
         <button type="submit" className="btn">
           {status === "loading" ? (
             <ClipLoader color="#e9edef" size={25} />
