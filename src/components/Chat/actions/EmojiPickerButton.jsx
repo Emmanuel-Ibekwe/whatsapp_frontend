@@ -36,10 +36,12 @@ export default function EmojiPickerButton({ textRef, onSetMessage, message }) {
       </button>
       {showPicker && (
         <div>
+          {/* Modal */}
           <div
-            className="absolute bottom-0 w-full h-screen"
+            className="absolute bottom-[60px] w-full h-screen"
             onClick={() => setShowPicker(false)}
           ></div>
+          {/* EmojiPicker */}
           <div className="openEmojiAnimation absolute bottom-[70px] left-[50px] w-[375px]">
             <EmojiPicker onEmojiClick={handleEmoji} theme="dark" />
           </div>
