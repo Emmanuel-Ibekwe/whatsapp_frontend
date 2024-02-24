@@ -5,7 +5,7 @@ import { sortInDescendingLatestMessageTime } from "../../../utils/chat";
 export default function Conversations() {
   const { conversations } = useSelector(state => state.chat);
   console.log(conversations);
-  const filteredConvos = conversations.filter(c => c.latestMessage);
+  const filteredConvos = conversations.filter(c => c.latestMessage); // This filters out conversations opened without any message(latestMessage)
   const sortedConversations = sortInDescendingLatestMessageTime([
     ...filteredConvos
   ]);
