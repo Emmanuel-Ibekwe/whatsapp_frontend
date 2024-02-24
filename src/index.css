@@ -96,11 +96,15 @@ code {
 }
 
 .openEmojiAnimation {
-  animation: openAn 0.1s forwards;
+  transform-origin: left bottom;
+  animation: openAn 0.3s forwards;
 }
 @keyframes openAn {
   0% {
-    transform: translateY(60px);
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 .epr-search-container input {
