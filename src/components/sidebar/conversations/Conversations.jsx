@@ -3,9 +3,13 @@ import Conversation from "./Conversation";
 import { sortInDescendingLatestMessageTime } from "../../../utils/chat";
 
 export default function Conversations() {
-  const { conversations } = useSelector(state => state.chat);
+  const { conversations, activeConversation } = useSelector(
+    state => state.chat
+  );
   console.log(conversations);
-  const filteredConvos = conversations.filter(c => c.latestMessage); // This filters out conversations opened without any message(latestMessage)
+  const filteredConvos = conversations.filter(
+    c => c.latestMessage || c._id === activeConversation._id
+  ); // This filters out conversations opened without any message(latestMessage)
   const sortedConversations = sortInDescendingLatestMessageTime([
     ...filteredConvos
   ]);
