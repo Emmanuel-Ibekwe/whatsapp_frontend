@@ -2,8 +2,14 @@ import { useState, useEffect } from "react";
 import { EmojiIcon } from "../../../svg";
 import EmojiPicker from "emoji-picker-react";
 
-export default function EmojiPickerButton({ textRef, onSetMessage, message }) {
-  const [showPicker, setShowPicker] = useState(false);
+export default function EmojiPickerButton({
+  textRef,
+  onSetMessage,
+  message,
+  showPicker,
+  onSetShowPicker,
+  onSetShowAttachments
+}) {
   const [cursorPosition, setCursorPosition] = useState(0);
 
   useEffect(() => {
@@ -26,7 +32,10 @@ export default function EmojiPickerButton({ textRef, onSetMessage, message }) {
       <button
         className="btn"
         type="button"
-        onClick={() => setShowPicker(prev => !prev)}
+        onClick={() => {
+          onSetShowAttachments(false);
+          onSetShowPicker(prev => !prev);
+        }}
       >
         <EmojiIcon
           className={`${
@@ -39,7 +48,7 @@ export default function EmojiPickerButton({ textRef, onSetMessage, message }) {
           {/* Modal */}
           <div
             className="absolute bottom-[60px] w-full h-screen"
-            onClick={() => setShowPicker(false)}
+            onClick={() => onSetShowPicker(false)}
           ></div>
           {/* EmojiPicker */}
           <div className="openEmojiAnimation absolute bottom-[70px] left-[50px] w-[375px]">
