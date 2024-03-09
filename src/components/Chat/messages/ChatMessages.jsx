@@ -18,7 +18,7 @@ export default function ChatMessages() {
 
   function mapMessages(message, i, arr) {
     let setCornerTriangle, showDate;
-    console.log("message_id", message._id);
+    // console.log("message_id", message._id);
     if (i <= 0 || message.sender._id !== arr[i - 1]?.sender._id) {
       setCornerTriangle = true;
     } else {
