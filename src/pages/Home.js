@@ -1,19 +1,36 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import Sidebar from "../components/sidebar/Sidebar";
 import { useSelector, useDispatch } from "react-redux";
-import { getConversations } from "../store/chatSlice";
+import { getConversations, updateMessages } from "../store/chatSlice";
 import WhatsappHome from "../components/Chat/WhatsappHome";
 import ChatContainer from "../components/Chat/ChatContainer";
+import SocketContext from "../context/SocketContext";
 
 function Home() {
   const { user } = useSelector(state => state.user);
   const { activeConversation } = useSelector(state => state.chat);
   const dispatch = useDispatch();
+
+  const { socket } = useContext(SocketContext);
+
+  // join user into the socket.io
+  useEffect(() => {
+    socket.emit("join", user._id);
+  }, [user]);
+
   useEffect(() => {
     if (user?.token) {
       dispatch(getConversations(user.token));
     }
   }, [user, dispatch]);
+
+  // Listening to received messages
+  useEffect(() => {
+    socket.on("receive message", message => {
+      console.log("message received ", message);
+      dispatch(updateMessages(message));
+    });
+  }, [socket]);
 
   return (
     <div className="relative h-screen dark:bg-dark_bg_1  justify-center overflow-hidden">
