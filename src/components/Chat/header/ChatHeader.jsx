@@ -1,8 +1,13 @@
 import { useSelector } from "react-redux";
 import { SearchLargeIcon, DotsIcon } from "../../../svg";
+import {
+  getConversationPicture,
+  getConversationName
+} from "../../../utils/chat";
 
 export default function ChatHeader() {
   const { activeConversation } = useSelector(state => state.chat);
+  const { user } = useSelector(state => state.user);
   const { name, picture } = activeConversation;
 
   return (
@@ -11,16 +16,14 @@ export default function ChatHeader() {
         <div className="flex items-center gap-x-4">
           <button className="btn ">
             <img
-              src={
-                "https://res.cloudinary.com/dawmodxmu/image/upload/v1708172938/cht6gou1klhstx7mzq3r.jpg"
-              }
+              src={getConversationPicture(user, activeConversation.users)}
               alt={`${name} picture`}
               className="w-full h-full rounded-full object-cover"
             />
           </button>
           <div className="flex flex-col">
             <h1 className="dark:text-[#e9edef] text-md tracking-wide  font-bold">
-              {name}
+              {getConversationName(user, activeConversation.users)}
             </h1>
             <span className="text-sm text-dark_svg_2">online</span>
           </div>
