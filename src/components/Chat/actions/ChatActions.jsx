@@ -57,7 +57,7 @@ export default function ChatActions() {
           />
         </ul>
         <Input onSetMessage={setMessage} message={message} textRef={textRef} />
-        <button type="submit" className="btn">
+        <button type="submit" className="btn" disabled={message.trim() === ""}>
           {loading && status === "loading" ? (
             <ClipLoader color="#e9edef" size={25} />
           ) : (
