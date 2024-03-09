@@ -6,9 +6,12 @@ import {
   setActiveConversation
 } from "../../../store/chatSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { getConversationId, getConversationPicture } from "../../../utils/chat";
+import {
+  getConversationId,
+  getConversationPicture,
+  getConversationName
+} from "../../../utils/chat";
 import SocketContext from "../../../context/SocketContext";
-import { getConversationName } from "../../../utils/chat";
 
 export default function Conversation({ convo }) {
   const { socket } = useContext(SocketContext);
