@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import moment from "moment";
 import { dateHandler } from "../../../utils/date";
 import {
@@ -6,9 +6,12 @@ import {
   setActiveConversation
 } from "../../../store/chatSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { getConversationId } from "../../../utils/chat";
+import { getConversationId, getConversationPicture } from "../../../utils/chat";
+import SocketContext from "../../../context/SocketContext";
+import { getConversationName } from "../../../utils/chat";
 
 export default function Conversation({ convo }) {
+  const { socket } = useContext(SocketContext);
   const [activeConvo, setActiveConvo] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector(state => state.user);
@@ -32,7 +35,8 @@ export default function Conversation({ convo }) {
   const openConversation = async () => {
     // const res = await dispatch(open_create_conversation(values));
     // console.log(res);
-    dispatch(setActiveConversation(convo));
+    const currentConvo = await dispatch(setActiveConversation(convo));
+    socket.emit("join conversation", currentConvo.payload._id);
   };
 
   // const date = new Date(convo?.latestMessage?.createdAt);
@@ -52,17 +56,17 @@ export default function Conversation({ convo }) {
             className={`h-[72px] relative w-full flex items-center justify-between py-[10px] px-[10px] hover:dark:bg-dark_bg_2 `}
           >
             <div className="flex items-center gap-x-3 w-full">
-              <div className="relative w-[50px] h-[50px] rounded-full overflow-hidden">
+              <div className="min-w-[50px] max-w-[50px] h-[50px] rounded-full overflow-hidden">
                 <img
-                  src="https://res.cloudinary.com/dkd5jblv5/image/upload/v1675976806/Default_ProfilePicture_gjngnb.png"
-                  alt={convo.name}
-                  className=" object-cover"
+                  src={getConversationPicture(user, convo.users)}
+                  alt={getConversationName(user, convo.users)}
+                  className=" object-cover w-full h-full"
                 />
               </div>
               <div className="w-full flex flex-col w-full ">
                 <div className="flex items-baseline justify-between  mt-0">
                   <h1 className="font-normal flex items-center gap-x-2 text-lg">
-                    {convo.name}
+                    {getConversationName(user, convo.users)}
                   </h1>
                   <span className="dark:text-dark_text_2 text-xs">
                     {dateHandler(convo?.latestMessage?.createdAt)}
