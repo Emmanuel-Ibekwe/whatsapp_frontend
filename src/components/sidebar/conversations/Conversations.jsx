@@ -1,11 +1,15 @@
 import { useSelector } from "react-redux";
 import Conversation from "./Conversation";
-import { sortInDescendingLatestMessageTime } from "../../../utils/chat";
+import {
+  sortInDescendingLatestMessageTime,
+  getConversationId
+} from "../../../utils/chat";
 
-export default function Conversations() {
+export default function Conversations({ onlineUsers }) {
   const { conversations, activeConversation } = useSelector(
     state => state.chat
   );
+  const { user } = useSelector(state => state.user);
   console.log(conversations);
   const filteredConvos = conversations.filter(
     c => c.latestMessage || c._id === activeConversation._id
@@ -18,9 +22,18 @@ export default function Conversations() {
     <div className="convos scrollbar">
       <ul className="list-none">
         {sortedConversations &&
-          sortedConversations.map(convo => (
-            <Conversation convo={convo} key={convo._id} />
-          ))}
+          sortedConversations.map(convo => {
+            let check = onlineUsers.find(
+              u => u.userId === getConversationId(user, convo.users)
+            );
+            return (
+              <Conversation
+                convo={convo}
+                key={convo._id}
+                online={check ? true : false}
+              />
+            );
+          })}
       </ul>
     </div>
   );
