@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { signInSchema } from "../../utils/validation";
@@ -7,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { loginUser } from "../../store/userSlice";
 import Input from "./Input";
 import { setExpirationInLocalStorage } from "../../utils/auth";
+import SocketContext from "../../context/SocketContext";
 
 export default function LoginForm() {
   const {
@@ -18,6 +20,7 @@ export default function LoginForm() {
     resolver: yupResolver(signInSchema)
   });
 
+  const { socket } = useContext(SocketContext);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { status, error } = useSelector(state => state.user);
@@ -29,6 +32,7 @@ export default function LoginForm() {
       setExpirationInLocalStorage();
     }
     if (res?.payload?.user) {
+      socket.connect();
       navigate("/");
     }
   };
