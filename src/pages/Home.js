@@ -18,7 +18,27 @@ function Home() {
   const { socket } = useContext(SocketContext);
 
   // Visibilitychange
-  useEffect(() => {});
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        console.log("Visibilitychange: socket disconnected");
+        socket.disconnect();
+      } else {
+        socket.connect();
+        console.log("Visibilitychange: socket connected");
+        socket.emit("join", user._id);
+        socket.on("get-online-users", users => {
+          setOnlineUsers(users);
+        });
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
 
   // join user into the socket.io
   useEffect(() => {
