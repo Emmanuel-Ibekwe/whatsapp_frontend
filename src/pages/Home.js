@@ -1,7 +1,10 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import Sidebar from "../components/sidebar/Sidebar";
 import { useSelector, useDispatch } from "react-redux";
-import { getConversations, updateMessages } from "../store/chatSlice";
+import {
+  getConversations,
+  updateMessagesAndConversations
+} from "../store/chatSlice";
 import WhatsappHome from "../components/Chat/WhatsappHome";
 import ChatContainer from "../components/Chat/ChatContainer";
 import SocketContext from "../context/SocketContext";
@@ -10,12 +13,20 @@ function Home() {
   const { user } = useSelector(state => state.user);
   const { activeConversation } = useSelector(state => state.chat);
   const dispatch = useDispatch();
+  const [onlineUsers, setOnlineUsers] = useState([]);
 
   const { socket } = useContext(SocketContext);
+
+  // Visibilitychange
+  useEffect(() => {});
 
   // join user into the socket.io
   useEffect(() => {
     socket.emit("join", user._id);
+    socket.on("get-online-users", users => {
+      console.log("online users", users);
+      setOnlineUsers(users);
+    });
   }, [user]);
 
   useEffect(() => {
@@ -28,14 +39,14 @@ function Home() {
   useEffect(() => {
     socket.on("receive message", message => {
       console.log("message received ", message);
-      dispatch(updateMessages(message));
+      dispatch(updateMessagesAndConversations(message));
     });
-  }, [socket]);
+  }, []);
 
   return (
     <div className="relative h-screen dark:bg-dark_bg_1  justify-center overflow-hidden">
       <div className=" h-screen flex items w-full">
-        <Sidebar />
+        <Sidebar onlineUsers={onlineUsers} />
         {activeConversation?._id ? <ChatContainer /> : <WhatsappHome />}
       </div>
     </div>
