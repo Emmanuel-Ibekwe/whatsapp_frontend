@@ -5,7 +5,7 @@ import Search from "./search/Search";
 import Conversations from "./conversations/Conversations";
 import SearchResults from "./search/SearchResults";
 
-function Sidebar() {
+function Sidebar({ onlineUsers }) {
   const [searchResults, setSearchResults] = useState([]);
 
   return (
@@ -20,7 +20,7 @@ function Sidebar() {
       {searchResults.length > 0 ? (
         <SearchResults searchResults={searchResults} />
       ) : (
-        <Conversations />
+        <Conversations onlineUsers={onlineUsers} />
       )}
     </div>
   );
