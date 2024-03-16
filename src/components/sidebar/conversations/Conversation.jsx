@@ -13,14 +13,13 @@ import {
 } from "../../../utils/chat";
 import SocketContext from "../../../context/SocketContext";
 
-export default function Conversation({ convo }) {
+export default function Conversation({ convo, online }) {
   const { socket } = useContext(SocketContext);
   const [activeConvo, setActiveConvo] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector(state => state.user);
   const { activeConversation } = useSelector(state => state.chat);
   const { token } = user;
-  console.log(convo);
 
   useEffect(() => {
     if (convo._id === activeConversation._id) {
@@ -58,14 +57,19 @@ export default function Conversation({ convo }) {
           <div
             className={`h-[72px] relative w-full flex items-center justify-between py-[10px] px-[10px] hover:dark:bg-dark_bg_2 `}
           >
-            <div className="flex items-center gap-x-3 w-full">
-              <div className="min-w-[50px] max-w-[50px] h-[50px] rounded-full overflow-hidden">
+            <div className="relative flex items-center gap-x-3 w-full">
+              <div
+                className={` min-w-[50px] max-w-[50px] h-[50px] rounded-full overflow-hidden `}
+              >
                 <img
                   src={getConversationPicture(user, convo.users)}
                   alt={getConversationName(user, convo.users)}
                   className=" object-cover w-full h-full"
                 />
               </div>
+              {online && (
+                <div className="z-index-10 absolute w-[13px] h-[13px] rounded-full bg-[#00a884] bottom-0 left-[35px]"></div>
+              )}
               <div className="w-full flex flex-col w-full ">
                 <div className="flex items-baseline justify-between  mt-0">
                   <h1 className="font-normal flex items-center gap-x-2 text-lg">
