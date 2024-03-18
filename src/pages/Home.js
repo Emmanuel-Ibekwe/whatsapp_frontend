@@ -67,7 +67,11 @@ function Home() {
     <div className="relative h-screen dark:bg-dark_bg_1  justify-center overflow-hidden">
       <div className=" h-screen flex items w-full">
         <Sidebar onlineUsers={onlineUsers} />
-        {activeConversation?._id ? <ChatContainer /> : <WhatsappHome />}
+        {activeConversation?._id ? (
+          <ChatContainer onlineUsers={onlineUsers} />
+        ) : (
+          <WhatsappHome />
+        )}
       </div>
     </div>
   );
