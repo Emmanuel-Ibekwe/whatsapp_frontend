@@ -14,6 +14,8 @@ import {
 import SocketContext from "../../../context/SocketContext";
 
 export default function Conversation({ convo, online }) {
+  const [isTyping, setIsTyping] = useState(false);
+
   const { socket } = useContext(SocketContext);
   const [activeConvo, setActiveConvo] = useState(false);
   const dispatch = useDispatch();
@@ -29,6 +31,26 @@ export default function Conversation({ convo, online }) {
     }
   }, [activeConversation]);
 
+  useEffect(() => {
+    socket.emit("join conversation", convo._id);
+  });
+
+  useEffect(() => {
+    socket.on("started typing", conversation => {
+      if (convo._id === conversation) {
+        setIsTyping(true);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    socket.on("stopped typing", conversation => {
+      if (convo._id === conversation) {
+        setIsTyping(false);
+      }
+    });
+  });
+
   const values = {
     receiver_id: getConversationId(user, convo.users),
     token,
@@ -38,7 +60,7 @@ export default function Conversation({ convo, online }) {
     // const res = await dispatch(open_create_conversation(values));
     // console.log(res);
     const currentConvo = await dispatch(setActiveConversation(convo));
-    socket.emit("join conversation", currentConvo.payload._id);
+    // socket.emit("join conversation", currentConvo.payload._id);
   };
 
   // const date = new Date(convo?.latestMessage?.createdAt);
@@ -80,11 +102,15 @@ export default function Conversation({ convo, online }) {
                   </span>
                 </div>
                 <div className="flex items-center gap-x-1 dark:text-dark_text_2 text-sm">
-                  <p>
-                    {convo?.latestMessage?.message.length > 50
-                      ? `${convo?.latestMessage?.message.substring(0, 50)}...`
-                      : convo?.latestMessage?.message}
-                  </p>
+                  {!isTyping ? (
+                    <p>
+                      {convo?.latestMessage?.message.length > 50
+                        ? `${convo?.latestMessage?.message.substring(0, 50)}...`
+                        : convo?.latestMessage?.message}
+                    </p>
+                  ) : (
+                    <p className="text-[#00a884]">typing...</p>
+                  )}
                 </div>
               </div>
             </div>

@@ -1,14 +1,36 @@
+import { useContext, useEffect, useState } from "react";
+
 import { useSelector } from "react-redux";
 import { SearchLargeIcon, DotsIcon } from "../../../svg";
+import SocketContext from "../../../context/SocketContext";
 import {
   getConversationPicture,
   getConversationName
 } from "../../../utils/chat";
 
-export default function ChatHeader() {
+export default function ChatHeader({ online }) {
+  const [isTyping, setIsTyping] = useState(false);
+  const { socket } = useContext(SocketContext);
   const { activeConversation } = useSelector(state => state.chat);
   const { user } = useSelector(state => state.user);
   const { name, picture } = activeConversation;
+
+  useEffect(() => {
+    socket.on("started typing", conversation => {
+      console.log("typing");
+      if (activeConversation._id === conversation) {
+        setIsTyping(true);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    socket.on("stopped typing", conversation => {
+      if (activeConversation._id === conversation) {
+        setIsTyping(false);
+      }
+    });
+  });
 
   return (
     <div className="h-[60px] dark:bg-dark_bg_2 flex items-center p16 select-none">
@@ -25,7 +47,13 @@ export default function ChatHeader() {
             <h1 className="dark:text-[#e9edef] text-md tracking-wide  font-bold">
               {getConversationName(user, activeConversation.users)}
             </h1>
-            <span className="text-sm text-dark_svg_2">online</span>
+            {isTyping ? (
+              <span className="text-sm text-dark_svg_2">typing...</span>
+            ) : online ? (
+              <span className="text-sm text-dark_svg_2">online</span>
+            ) : (
+              ""
+            )}
           </div>
         </div>
         <ul className="flex items-center gap-x-2.5">
