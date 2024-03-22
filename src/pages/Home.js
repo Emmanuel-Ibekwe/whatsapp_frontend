@@ -22,7 +22,7 @@ function Home() {
     const handleVisibilityChange = () => {
       if (document.hidden) {
         console.log("Visibilitychange: socket disconnected");
-        socket.disconnect();
+        socket.connect();
       } else {
         socket.connect();
         console.log("Visibilitychange: socket connected");
