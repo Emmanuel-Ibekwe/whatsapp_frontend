@@ -55,6 +55,10 @@ code {
     overflow-y: auto;
     overflow-x: hidden;
   }
+
+  .hview {
+    height: calc(100vh - 280px);
+  }
 }
 
 /* Animations */
