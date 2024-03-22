@@ -5,10 +5,11 @@ import ChatMessages from "./messages/ChatMessages";
 import ChatActions from "./actions/ChatActions";
 import { getConversationMessages } from "../../store/chatSlice";
 import { getConversationId } from "../../utils/chat";
+import FilesPreview from "./preview/FilesPreview";
 
 export default function ChatContainer({ onlineUsers }) {
   const dispatch = useDispatch();
-  const { activeConversation, messages } = useSelector(state => state.chat);
+  const { activeConversation, files } = useSelector(state => state.chat);
   const { user } = useSelector(state => state.user);
   const { token } = user;
 
@@ -32,8 +33,14 @@ export default function ChatContainer({ onlineUsers }) {
               : false
           )}
         />
-        <ChatMessages />
-        <ChatActions />
+        {files.length > 0 ? (
+          <FilesPreview />
+        ) : (
+          <>
+            <ChatMessages />
+            <ChatActions />
+          </>
+        )}
       </div>
     </div>
   );
