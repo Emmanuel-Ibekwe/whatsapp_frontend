@@ -1,23 +1,31 @@
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
-import { PhotoIcon } from "../../../../../svg";
+import { DocumentIcon } from "../../../../../svg";
 import { addFiles } from "../../../../../store/chatSlice";
 import { getFileType } from "../../../../../utils/file";
 
-function PhotoAttachment() {
+export default function DocumentAttachment() {
   const dispatch = useDispatch();
   const inputRef = useRef();
-  const imageHandler = e => {
+  const documentHandler = e => {
     let files = Array.from(e.target.files);
     files.forEach(file => {
       if (
-        file.type !== "image/png" &&
-        file.type !== "image/jpeg" &&
-        file.type !== "image/webp" &&
-        file.type !== "image/gif" &&
-        file.type !== "video/mp4" &&
-        file.type !== "video/mpeg" &&
-        file.type !== "image/webm"
+        file.type !== "application/pdf" &&
+        file.type !== "text/plain" &&
+        file.type !== "application/msword" &&
+        file.type !==
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document" &&
+        file.type !== "application/vnd.ms-powerpoint" &&
+        file.type !==
+          "application/vnd.openxmlformats-officedocument.presentationml.presentation" &&
+        file.type !== "application/vnd.ms-excel" &&
+        file.type !==
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" &&
+        file.type !== "application/vnd.rar" &&
+        file.type !== "application/zip" &&
+        file.type !== "audio/mpeg" &&
+        file.type !== "audio/wav"
       ) {
         files = files.filter(item => item.name !== file.name);
         return;
@@ -43,22 +51,20 @@ function PhotoAttachment() {
   return (
     <li>
       <button
-        onClick={() => inputRef.current.click()}
         type="button"
-        className="bg-[#BF59CF] rounded-full"
+        className="rounded-full bg-[#5f66cd]"
+        onClick={() => inputRef.current.click()}
       >
-        <PhotoIcon />
+        <DocumentIcon />
       </button>
       <input
         type="file"
         hidden
         multiple
         ref={inputRef}
-        accept="image/png,image/jpeg,image/gif,image/webp,video/mp4,video/mpeg,image/webm"
-        onChange={imageHandler}
+        accept="application/*,text/plain,audio/mpeg,audio/wav"
+        onChange={documentHandler}
       />
     </li>
   );
 }
-
-export default PhotoAttachment;
