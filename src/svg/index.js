@@ -26,8 +26,11 @@ import CallIcon from "./Call";
 import MuteIcon from "./Mute";
 import NoVideoIcon from "./NoVideo";
 import TriangleIcon from "./Triangle";
+import DownloadIcon from "./Download";
+import ValidIcon from "./Valid";
 export {
   CommunityIcon,
+  ValidIcon,
   StoryIcon,
   ChatIcon,
   NotificationIcon,
@@ -47,6 +50,7 @@ export {
   StickerIcon,
   CameraIcon,
   DocumentIcon,
+  DownloadIcon,
   ContactIcon,
   PollIcon,
   SmallArrowIcon,
