@@ -1,6 +1,6 @@
 import Contact from "./Contact";
 
-export default function SearchResults({ searchResults }) {
+export default function SearchResults({ searchResults, searchInput }) {
   return (
     <div className="convos w-full scrollbar">
       <div>
@@ -11,7 +11,11 @@ export default function SearchResults({ searchResults }) {
         <ul>
           {searchResults &&
             searchResults.map(user => (
-              <Contact contact={user} key={user._id} />
+              <Contact
+                contact={user}
+                key={user._id}
+                searchInput={searchInput}
+              />
             ))}
         </ul>
       </div>

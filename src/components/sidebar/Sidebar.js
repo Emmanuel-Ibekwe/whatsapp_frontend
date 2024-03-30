@@ -7,6 +7,7 @@ import SearchResults from "./search/SearchResults";
 
 function Sidebar({ onlineUsers }) {
   const [searchResults, setSearchResults] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
 
   return (
     <div className="w-[400px] h-full select-none shrink-0 ">
@@ -15,10 +16,14 @@ function Sidebar({ onlineUsers }) {
       <Search
         searchLength={searchResults.length}
         setSearchResults={setSearchResults}
+        onSetSearchInput={setSearchInput}
       />
 
       {searchResults.length > 0 ? (
-        <SearchResults searchResults={searchResults} />
+        <SearchResults
+          searchResults={searchResults}
+          searchInput={searchInput}
+        />
       ) : (
         <Conversations onlineUsers={onlineUsers} />
       )}

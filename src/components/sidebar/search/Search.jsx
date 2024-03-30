@@ -4,12 +4,13 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import SearchResults from "./SearchResults";
 
-function Search({ searchLength, setSearchResults }) {
+function Search({ searchLength, setSearchResults, onSetSearchInput }) {
   const { user } = useSelector(state => state.user);
   const [show, setShow] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const handleSearch = async e => {
     setInputValue(e.target.value);
+    onSetSearchInput(e.target.value);
     if (e.target.value) {
       try {
         const { data } = await axios.get(

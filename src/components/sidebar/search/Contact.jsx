@@ -2,8 +2,9 @@ import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { open_create_conversation } from "../../../store/chatSlice";
 import SocketContext from "../../../context/SocketContext";
+import BoldedText from "../../../UI/BoldText";
 
-export default function Contact({ contact }) {
+export default function Contact({ contact, searchInput }) {
   const { socket } = useContext(SocketContext);
   const dispatch = useDispatch();
   const { user } = useSelector(state => state.user);
@@ -35,8 +36,8 @@ export default function Contact({ contact }) {
         {/*Conversation name and message*/}
         <div className="w-full flex flex-col">
           {/*Conversation name*/}
-          <h1 className="font-bold flex items-center gap-x-2">
-            {contact.name}
+          <h1 className=" flex items-center gap-x-2">
+            <BoldedText text={contact.name} shouldBeBold={searchInput} />
           </h1>
           <div className="flex items-center gap-x-1 dark:text-dark_text_2">
             <div className="flex-1 items-center gap-x-1 dark:text-dark_text_2">
