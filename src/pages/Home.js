@@ -1,13 +1,19 @@
-import { useEffect, useContext, useState } from "react";
+import { useEffect, useContext, useState, useRef } from "react";
 import Sidebar from "../components/sidebar/Sidebar";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getConversations,
   updateMessagesAndConversations
 } from "../store/chatSlice";
+import Call from "../components/Chat/call/Call";
 import WhatsappHome from "../components/Chat/WhatsappHome";
 import ChatContainer from "../components/Chat/ChatContainer";
 import SocketContext from "../context/SocketContext";
+
+const callData = {
+  receivingCall: true,
+  callEnded: false
+};
 
 function Home() {
   const { user } = useSelector(state => state.user);
@@ -16,6 +22,12 @@ function Home() {
   const [onlineUsers, setOnlineUsers] = useState([]);
 
   const { socket } = useContext(SocketContext);
+
+  const [call, setCall] = useState(callData);
+  const [stream, setStream] = useState();
+  const [callAccepted, setCallAccepted] = useState(false);
+  const myVideo = useRef();
+  const userVideo = useRef();
 
   // Visibilitychange
   useEffect(() => {
@@ -72,6 +84,14 @@ function Home() {
         ) : (
           <WhatsappHome />
         )}
+        <Call
+          call={call}
+          onSetCall={setCall}
+          callAccepted={callAccepted}
+          userVideo={userVideo}
+          myVideo={myVideo}
+          stream={stream}
+        />
       </div>
     </div>
   );
