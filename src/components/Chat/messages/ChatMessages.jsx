@@ -2,6 +2,7 @@ import { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Message from "./Message";
 import { sameDay } from "../../../utils/date";
+import FileMessage from "./files/FileMessage";
 
 export default function ChatMessages() {
   const { messages } = useSelector(state => state.chat);
@@ -36,13 +37,29 @@ export default function ChatMessages() {
     }
 
     return (
-      <Message
-        message={message}
-        key={message._id}
-        me={user._id === message.sender._id}
-        setCornerTriangle={setCornerTriangle}
-        showDate={showDate}
-      />
+      <>
+        {message.files.length > 0
+          ? message.files.map(file => (
+              <FileMessage
+                filePayload={file}
+                message={message}
+                key={message._id}
+                me={user._id === message.sender._id}
+                setCornerTriangle={setCornerTriangle}
+                showDate={showDate}
+              />
+            ))
+          : null}
+        {message.message.length > 0 ? (
+          <Message
+            message={message}
+            key={message._id}
+            me={user._id === message.sender._id}
+            setCornerTriangle={setCornerTriangle}
+            showDate={showDate}
+          />
+        ) : null}
+      </>
     );
   }
 
