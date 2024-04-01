@@ -12,7 +12,6 @@ import {
   getConversationName
 } from "../../../utils/chat";
 import SocketContext from "../../../context/SocketContext";
-
 export default function Conversation({ convo, online }) {
   const [isTyping, setIsTyping] = useState(false);
 
