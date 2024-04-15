@@ -1,14 +1,19 @@
 import { useContext, useEffect, useState } from "react";
 
 import { useSelector } from "react-redux";
-import { SearchLargeIcon, DotsIcon } from "../../../svg";
+import {
+  SearchLargeIcon,
+  DotsIcon,
+  VideoCallIcon,
+  CallIcon
+} from "../../../svg";
 import SocketContext from "../../../context/SocketContext";
 import {
   getConversationPicture,
   getConversationName
 } from "../../../utils/chat";
 
-export default function ChatHeader({ online }) {
+export default function ChatHeader({ online, callUser }) {
   const [isTyping, setIsTyping] = useState(false);
   const { socket } = useContext(SocketContext);
   const { activeConversation } = useSelector(state => state.chat);
@@ -17,7 +22,6 @@ export default function ChatHeader({ online }) {
 
   useEffect(() => {
     socket.on("started typing", conversation => {
-      console.log("typing");
       if (activeConversation._id === conversation) {
         setIsTyping(true);
       }
@@ -57,6 +61,16 @@ export default function ChatHeader({ online }) {
           </div>
         </div>
         <ul className="flex items-center gap-x-2.5">
+          <li onClick={() => callUser()}>
+            <button className="btn">
+              <VideoCallIcon />
+            </button>
+          </li>
+          <li>
+            <button className="btn">
+              <CallIcon />
+            </button>
+          </li>
           <li>
             <button className="btn">
               <SearchLargeIcon className="dark:fill-dark_svg_1" />
