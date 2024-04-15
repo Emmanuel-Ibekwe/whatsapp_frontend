@@ -7,7 +7,7 @@ import { getConversationMessages } from "../../store/chatSlice";
 import { getConversationId } from "../../utils/chat";
 import FilesPreview from "./preview/FilesPreview";
 
-export default function ChatContainer({ onlineUsers }) {
+export default function ChatContainer({ onlineUsers, callUser }) {
   const dispatch = useDispatch();
   const { activeConversation, files } = useSelector(state => state.chat);
   const { user } = useSelector(state => state.user);
@@ -27,6 +27,7 @@ export default function ChatContainer({ onlineUsers }) {
     <div className="relative w-full h-full border-l dark:border-l-dark_border_2 select-none overflow-hidden">
       <div>
         <ChatHeader
+          callUser={callUser}
           online={onlineUsers.find(u =>
             u.userId === getConversationId(user, activeConversation.users)
               ? true
