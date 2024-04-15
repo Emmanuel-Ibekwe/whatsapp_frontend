@@ -44,7 +44,7 @@ function App() {
               element={token ? <Home /> : <Navigate to="/login" />}
             />
             <Route exact path="/signup" element={<Signup />} />
-            <Route exact path="/login" element={<Login />} />
+            <Route exact path="/login" element={token ? <Home /> : <Login />} />
           </Routes>
         </Router>
       </div>
