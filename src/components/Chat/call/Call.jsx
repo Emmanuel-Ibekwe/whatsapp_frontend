@@ -10,54 +10,89 @@ export default function Call({
   callAccepted,
   userVideo,
   myVideo,
-  stream
+  answerCall,
+  stream,
+  show,
+  endCall,
+  totalSecsInCall,
+  setTotalSecsInCall
 }) {
   const [showActions, setShowActions] = useState(false);
-  const { receivingCall, callEnded } = call;
+  const [toggle, setToggle] = useState(false);
+  const { receiveingCall, callEnded, name } = call;
+  // console.log("receiveingCall from Call component: ", receiveingCall);
+  // console.log("callAccepted from Call component: ", callAccepted);
   return (
-    <div
-      className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[550px] z-10 rounded-2xl overflow-hidden callbg"
-      onMouseOver={() => setShowActions(true)}
-      onMouseOut={() => setShowActions(false)}
-    >
-      {/* Container */}
-      <div>
+    <>
+      <div
+        className={`fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[550px] z-10 rounded-2xl overflow-hidden callbg ${
+          receiveingCall && !callAccepted ? "hidden" : ""
+        }`}
+        onMouseOver={() => setShowActions(true)}
+        onMouseOut={() => setShowActions(false)}
+      >
+        {/* Container */}
         <div>
-          {/* Header */}
-          <CallHeader />
-          {/* CallArea */}
-          <CallArea name="Emmanuel Ibekwe" />
-          {/* Call Actions */}
-          {showActions && <CallActions />}
-        </div>
-        {/* Video Streams */}
-        <div>
-          {/* User video */}
           <div>
-            <video
-              ref={userVideo}
-              playsInline
-              muted
-              autoplay
-              className="largeVideoCall"
-            ></video>
+            {/* Header */}
+            <CallHeader />
+            {/* CallArea */}
+            <CallArea
+              name={name}
+              totalSecsInCall={totalSecsInCall}
+              setTotalSecsInCall={setTotalSecsInCall}
+              callAccepted={callAccepted}
+            />
+            {/* Call Actions */}
+            {showActions && <CallActions endCall={endCall} />}
           </div>
-          {/* my video */}
+          {/* Video Streams */}
           <div>
-            <video
-              ref={myVideo}
-              playsInline
-              muted
-              autoplay
-              className={`smallVideoCall ${showActions ? "moveVideoCall" : ""}`}
-            ></video>
+            {/* User video */}
+            {callAccepted && !callEnded && (
+              <div>
+                <video
+                  ref={userVideo}
+                  playsInline
+                  autoPlay
+                  controls
+                  muted
+                  className={`${toggle ? "smallVideoCall" : "largeVideoCall"} ${
+                    toggle && showActions ? "moveVideoCall" : ""
+                  }`}
+                  onClick={() => setToggle(prev => !prev)}
+                ></video>
+              </div>
+            )}
+            {/* my video */}
+            {stream && (
+              <div onClick={() => setToggle(prev => !prev)}>
+                <video
+                  ref={myVideo}
+                  playsInline
+                  controls
+                  muted
+                  autoPlay
+                  className={`${
+                    !toggle ? "smallVideoCall" : "largeVideoCall"
+                  }  ${showActions ? "moveVideoCall" : ""}`}
+                ></video>
+              </div>
+            )}
           </div>
         </div>
       </div>
-
-      {receivingCall && !callAccepted && (
-        <Ringing call={call} onSetCall={onSetCall} />
+      {receiveingCall && !callAccepted && (
+        <Ringing
+          call={call}
+          onSetCall={onSetCall}
+          answerCall={answerCall}
+          endCall={endCall}
+        />
       )}
-    </div>
+      {!callAccepted && show && (
+        <audio src="../../../../audio/ringing.mp3" autoPlay></audio>
+      )}
+    </>
   );
 }
