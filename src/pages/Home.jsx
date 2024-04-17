@@ -44,6 +44,7 @@ function Home() {
   const { receiveingCall, callEnded, socketId } = call;
   const [callAccepted, setCallAccepted] = useState(false);
   const [totalSecsInCall, setTotalSecsInCall] = useState(0);
+
   const myVideo = useRef();
   const userVideo = useRef();
   const connectionRef = useRef();
@@ -124,6 +125,7 @@ function Home() {
         connectionRef?.current?.destroy();
       }
       setCallAccepted(false);
+      setTotalSecsInCall(0);
 
       // setUpMedia();
     });
@@ -251,6 +253,7 @@ function Home() {
   const endCall = () => {
     setShow(false);
     setCallAccepted(false);
+    setTotalSecsInCall(0);
     // setCall({
     //   ...call,
     //   callEnded: true,
