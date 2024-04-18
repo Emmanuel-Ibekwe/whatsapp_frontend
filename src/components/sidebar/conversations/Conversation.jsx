@@ -68,58 +68,63 @@ export default function Conversation({ convo, online }) {
 
   return (
     <>
-      {convo?.latestMessage && (
-        <li
-          onClick={() => openConversation()}
-          className={`w-full ${
-            activeConvo ? "dark:bg-dark_bg_5" : "dark:bg-dark_bg_1"
-          }    dark:text-dark_text_1  cursor-pointer`}
+      <li
+        onClick={() => openConversation()}
+        className={`w-full ${
+          activeConvo ? "dark:bg-dark_bg_5" : "dark:bg-dark_bg_1"
+        }    dark:text-dark_text_1  cursor-pointer`}
+      >
+        <div
+          className={`h-[72px] relative w-full flex items-center justify-between py-[10px] px-[10px] hover:dark:bg-dark_bg_2 `}
         >
-          <div
-            className={`h-[72px] relative w-full flex items-center justify-between py-[10px] px-[10px] hover:dark:bg-dark_bg_2 `}
-          >
-            <div className="relative flex items-center gap-x-3 w-full">
-              <div
-                className={` min-w-[50px] max-w-[50px] h-[50px] rounded-full overflow-hidden `}
-              >
-                <img
-                  src={getConversationPicture(user, convo.users)}
-                  alt={getConversationName(user, convo.users)}
-                  className=" object-cover w-full h-full"
-                />
+          <div className="relative flex items-center gap-x-3 w-full">
+            <div
+              className={` min-w-[50px] max-w-[50px] h-[50px] rounded-full overflow-hidden `}
+            >
+              <img
+                src={
+                  convo.isGroup
+                    ? convo.picture
+                    : getConversationPicture(user, convo.users)
+                }
+                alt={getConversationName(user, convo.users)}
+                className=" object-cover w-full h-full"
+              />
+            </div>
+            {online && (
+              <div className="z-index-10 absolute w-[13px] h-[13px] rounded-full bg-[#00a884] bottom-0 left-[35px]"></div>
+            )}
+            <div className="w-full flex flex-col w-full ">
+              <div className="flex items-baseline justify-between  mt-0">
+                {/* conversation name */}
+                <h1 className="font-normal flex items-center gap-x-2 text-lg">
+                  {convo.isGroup
+                    ? convo.name
+                    : getConversationName(user, convo.users)}
+                </h1>
+                <span className="dark:text-dark_text_2 text-xs">
+                  {dateHandler(convo?.latestMessage?.createdAt)}
+                </span>
               </div>
-              {online && (
-                <div className="z-index-10 absolute w-[13px] h-[13px] rounded-full bg-[#00a884] bottom-0 left-[35px]"></div>
-              )}
-              <div className="w-full flex flex-col w-full ">
-                <div className="flex items-baseline justify-between  mt-0">
-                  <h1 className="font-normal flex items-center gap-x-2 text-lg">
-                    {getConversationName(user, convo.users)}
-                  </h1>
-                  <span className="dark:text-dark_text_2 text-xs">
-                    {dateHandler(convo?.latestMessage?.createdAt)}
-                  </span>
-                </div>
-                <div className="flex items-center gap-x-1 dark:text-dark_text_2 text-sm">
-                  {!isTyping ? (
-                    <p>
-                      {convo?.latestMessage?.message.length > 50
-                        ? `${convo?.latestMessage?.message.substring(0, 50)}...`
-                        : convo?.latestMessage?.message}
-                    </p>
-                  ) : (
-                    <p className="text-[#00a884]">typing...</p>
-                  )}
-                </div>
+              <div className="flex items-center gap-x-1 dark:text-dark_text_2 text-sm">
+                {!isTyping ? (
+                  <p>
+                    {convo?.latestMessage?.message.length > 50
+                      ? `${convo?.latestMessage?.message.substring(0, 50)}...`
+                      : convo?.latestMessage?.message}
+                  </p>
+                ) : (
+                  <p className="text-[#00a884]">typing...</p>
+                )}
               </div>
             </div>
           </div>
-          <div className="flex w-full gap-x-3">
-            <div className="w-[50px]"></div>
-            <div className="w-full border-b dark:border-b-dark_border_1"></div>
-          </div>
-        </li>
-      )}
+        </div>
+        <div className="flex w-full gap-x-3">
+          <div className="w-[50px]"></div>
+          <div className="w-full border-b dark:border-b-dark_border_1"></div>
+        </div>
+      </li>
     </>
   );
 }
