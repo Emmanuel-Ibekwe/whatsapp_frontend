@@ -18,7 +18,7 @@ export default function CallTimer({
   }, [callAccepted, totalSecsInCall, setTotalSecsInCall]);
   return (
     <div
-      classname={`text-dark_text_2 ${totalSecsInCall > 0 ? "block" : "hidden"}`}
+      className={`text-dark_text_2 ${totalSecsInCall > 0 ? "block" : "hidden"}`}
     >
       <span>
         {parseInt(totalSecsInCall / 3600).toString().length < 2
