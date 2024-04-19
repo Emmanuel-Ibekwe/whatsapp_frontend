@@ -18,12 +18,14 @@ export default function ChatMessages() {
   }, [messages]);
 
   function mapMessages(message, i, arr) {
-    let setCornerTriangle, showDate;
+    let setCornerTriangle, showDate, showSenderPicture;
     // console.log("message_id", message._id);
     if (i <= 0 || message.sender._id !== arr[i - 1]?.sender._id) {
       setCornerTriangle = true;
+      showSenderPicture = true;
     } else {
       setCornerTriangle = false;
+      showSenderPicture = false;
     }
 
     const currentMessageDate = new Date(message.updatedAt);
@@ -47,6 +49,7 @@ export default function ChatMessages() {
                 me={user._id === message.sender._id}
                 setCornerTriangle={setCornerTriangle}
                 showDate={showDate}
+                showSenderPicture={showSenderPicture}
               />
             ))
           : null}
@@ -56,6 +59,7 @@ export default function ChatMessages() {
             key={message._id}
             me={user._id === message.sender._id}
             setCornerTriangle={setCornerTriangle}
+            showSenderPicture={showSenderPicture}
             showDate={showDate}
           />
         ) : null}
