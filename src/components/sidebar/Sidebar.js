@@ -10,7 +10,7 @@ function Sidebar({ onlineUsers }) {
   const [searchInput, setSearchInput] = useState("");
 
   return (
-    <div className="w-[400px] h-full select-none shrink-0 ">
+    <div className="relative w-[400px] h-full select-none shrink-0 ">
       <SidebarHeader />
       <Notifications />
       <Search
