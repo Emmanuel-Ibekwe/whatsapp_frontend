@@ -12,12 +12,12 @@ export default function Conversations({ onlineUsers }) {
   const { user } = useSelector(state => state.user);
   console.log(conversations);
   const filteredConvos = conversations.filter(
-    c => c.latestMessage || c._id === activeConversation._id
+    c =>
+      c.latestMessage || c._id === activeConversation._id || c.isGroup === true
   ); // This filters out conversations opened without any message(latestMessage)
   const sortedConversations = sortInDescendingLatestMessageTime([
     ...filteredConvos
   ]);
-  console.log(sortedConversations);
   return (
     <div className="convos scrollbar">
       <ul className="list-none">
@@ -30,7 +30,7 @@ export default function Conversations({ onlineUsers }) {
               <Conversation
                 convo={convo}
                 key={convo._id}
-                online={check ? true : false}
+                online={check && !convo.isGroup ? true : false}
               />
             );
           })}
