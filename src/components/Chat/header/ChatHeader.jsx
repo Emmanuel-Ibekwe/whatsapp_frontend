@@ -42,14 +42,20 @@ export default function ChatHeader({ online, callUser }) {
         <div className="flex items-center gap-x-4">
           <button className="btn ">
             <img
-              src={getConversationPicture(user, activeConversation.users)}
+              src={
+                activeConversation.isGroup
+                  ? activeConversation.picture
+                  : getConversationPicture(user, activeConversation.users)
+              }
               alt={`${name} picture`}
               className="w-full h-full rounded-full object-cover"
             />
           </button>
           <div className="flex flex-col">
             <h1 className="dark:text-[#e9edef] text-md tracking-wide  font-bold">
-              {getConversationName(user, activeConversation.users)}
+              {activeConversation.isGroup
+                ? activeConversation.name
+                : getConversationName(user, activeConversation.users)}
             </h1>
             {isTyping ? (
               <span className="text-sm text-dark_svg_2">typing...</span>
