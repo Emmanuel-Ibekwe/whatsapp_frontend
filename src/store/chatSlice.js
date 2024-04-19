@@ -90,6 +90,28 @@ export const sendMessage = createAsyncThunk(
   }
 );
 
+export const createGroupConversation = createAsyncThunk(
+  "conversations/createGroupConversation",
+  async (values, { rejectWithValue }) => {
+    try {
+      const { token, name, users } = values;
+      const { data } = await axios.post(
+        `${CONVERSATION_ENDPOINT}/group`,
+        { name, users },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      return data;
+    } catch (error) {
+      rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
 const chatSlice = createSlice({
   name: "chat",
   initialState,
